@@ -1,4 +1,4 @@
-const User = require("../models/userModel");
+const School = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
@@ -6,10 +6,10 @@ const createToken = (_id) => {
 };
 
 const signupUser = async (req, res) => {
-  const { email, username, password } = req.body;
+  const { name, password } = req.body;
 
   try {
-    const user = await User.signup(email, username, password);
+    const user = await School.signup(name, password);
     const token = createToken(user._id);
     res.status(200).json({ username, email, password, token });
   } catch (error) {
@@ -18,10 +18,10 @@ const signupUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
 
   try {
-    const user = await User.login(username, password);
+    const user = await School.login(name, password);
     const token = createToken(user._id);
     res.status(200).json({ username, password, token });
   } catch (error) {
